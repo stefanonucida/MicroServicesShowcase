@@ -1,0 +1,61 @@
+const express = require('express') 
+const http = require('http') 
+
+const app = express()
+const port = 3000
+
+app.get('/', (req, res) => {
+  res.send('Hello World!')
+})  
+
+app.get('/sendmessagetoRabbit', async (req, res) => { 
+  let data = "";  
+  console.log("parte chiamata per dal"); 
+  try { 
+    http.get('http://node_rabbit:3000/sendmessage', (resp) => {  
+    console.log("ricevuta risposta");
+    resp.on('data', (chunk) => { data += chunk; }); 
+    resp.on('end', ()=>{  
+      console.log('fine ricezione')
+      var asString = JSON.parse(data);
+      console.log(asString.explanation) 
+      console.log(asString); 
+    });    
+  }).on("error", (err) => {
+    console.log("Error: " + err.message);
+    data = err.message;
+  });
+  } catch (error) { 
+    data = error;
+  } 
+  res.send('messaggio ricevuto correttamente')
+}
+)
+app.get('/writemessagetomongo', async (req, res) => { 
+  let data = "";  
+  console.log("parte chiamata per dal"); 
+  try { 
+    http.get('http://node_mongo:3000/writemessage', (resp) => {  
+    console.log("ricevuta risposta");
+    resp.on('data', (chunk) => { data += chunk; }); 
+    resp.on('end', ()=>{  
+      console.log('fine ricezione')
+      var asString = JSON.parse(data);
+      console.log(asString.explanation) 
+      console.log(asString); 
+    });    
+  }).on("error", (err) => {
+    console.log("Error: " + err.message);
+    data = err.message;
+  });
+  } catch (error) { 
+    data = error;
+  } 
+  res.send('messaggio ricevuto correttamente')
+}
+)
+
+
+app.listen(port, () => {
+  console.log(`Example app listening on port ${port}`)
+})

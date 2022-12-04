@@ -1,0 +1,14 @@
+version: '3.9'
+
+name: subscriber-and-nosql
+
+services: 
+  queue-subscriber:
+    container_name: queue-subscriber
+    build:
+      context: ../../4_QueueSubscriber
+      dockerfile: Dockerfile 
+    restart: on-failure:5
+    image: stefanonucida/queue-subscriber 
+  
+

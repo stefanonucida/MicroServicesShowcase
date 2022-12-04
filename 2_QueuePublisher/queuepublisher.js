@@ -1,3 +1,4 @@
+import {queueConnectionUrl, queueName} from '../3_QueueSystem/queueInformations'
 const express = require('express')
 const amqp = require('amqplib')
 
@@ -11,21 +12,22 @@ app.get('/', (req, res) => {
 })  
 
 app.get('/sendmessagetoqueue', async (req, res) => {
-  const msgBuffer = Buffer.from(JSON.stringify({ number: 10 }));
   try {
-    console.log("new message received for rabbit");
-    const connection = await amqp.connect("amqp://rabbitmq");
+    var messageToQueue = `New Message For Queue Received ${new Date()}`
+    const msgBuffer = Buffer.from(messageToQueue);
+    console.log(messageToQueue);
+    const connection = await amqp.connect(queueConnectionUrl);
     const channel = await connection.createChannel();
-    await channel.assertQueue("number");
-    await channel.sendToQueue("number", msgBuffer);
+    await channel.assertQueue(queueName);
+    await channel.sendToQueue(queueName, msgBuffer);
     console.log("Sending message to number queue");
     await channel.close();
     await connection.close();
     console.log("message sent");
-    res.send(JSON.stringify({result: "message sent"}));
+    res.status(200).send(JSON.stringify({result: "message sent"}));
   } catch (ex) {
     console.error(ex);
-    res.send('error: '+ ex);
+    res.status(500).send('error: '+ ex);
   }
 }) 
 

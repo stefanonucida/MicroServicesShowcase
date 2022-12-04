@@ -1,4 +1,4 @@
-import {queueConnectionUrl, queueName} from '../3_QueueSystem/queueInformations'
+const {queueConnectionUrl, queueName} = require('./queueInformations.js') 
 
 const amqp = require('amqplib')
 const { MongoClient } = require("mongodb"); 

@@ -1,4 +1,5 @@
-import {queueConnectionUrl, queueName} from '../3_QueueSystem/queueInformations'
+const {queueConnectionUrl, queueName} = require('./queueInformations.js') 
+
 const express = require('express')
 const amqp = require('amqplib')
 

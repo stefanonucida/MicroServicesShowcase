@@ -4,7 +4,11 @@ const amqp = require('amqplib')
 const app = express()
 const port = 3000 
 
-app.get('/', (req,res)=>{ res.send('risposta noderabbit')})
+app.get('/', (req, res) => {
+  var message = `Hello World From QueuePublisher! ${new Date()}`;
+  console.log(message);
+  res.send(message);
+})  
 
 app.get('/sendmessage', async (req, res) => {
   const msgBuffer = Buffer.from(JSON.stringify({ number: 10 }));

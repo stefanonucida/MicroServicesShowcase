@@ -1,0 +1,28 @@
+version: '3.9'
+
+name: initial-stack
+
+services:
+  backend-for-frontend:
+    container_name: backend-for-frontend
+    build:
+      context: ../../1_BFF
+      dockerfile: Dockerfile
+    image: stefanonucida/backend-for-frontend
+    ports:
+      - 3000:3000
+    restart: on-failure:5
+  queue-publisher:
+    container_name: queue-publisher
+    build:
+      context: ../../2_QueuePublisher
+      dockerfile: Dockerfile 
+    restart: on-failure:5
+    image: stefanonucida/queue-publisher
+  rabbitmq:
+    container_name: rabbitmq
+    image: rabbitmq:management-alpine
+    ports:
+      - 15672:15672
+      - 5672:5672
+

@@ -15,7 +15,7 @@ app.get('/fromFE', async (req, res) => {
   console.log("parte chiamata per dal"); 
   try 
   { 
-      http.get('http://node_rabbit:3000/sendmessage', (resp) => 
+      http.get('http://queue-publisher:3000/sendmessagetoqueue', (resp) => 
       {  
         console.log("ricevuta risposta");
         resp.on('data', (chunk) => { data += chunk; }); 

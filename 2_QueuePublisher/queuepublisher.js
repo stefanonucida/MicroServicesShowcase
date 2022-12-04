@@ -10,9 +10,10 @@ app.get('/', (req, res) => {
   res.send(message);
 })  
 
-app.get('/sendmessage', async (req, res) => {
+app.get('/sendmessagetoqueue', async (req, res) => {
   const msgBuffer = Buffer.from(JSON.stringify({ number: 10 }));
   try {
+    console.log("new message received for rabbit");
     const connection = await amqp.connect("amqp://rabbitmq");
     const channel = await connection.createChannel();
     await channel.assertQueue("number");
@@ -29,5 +30,5 @@ app.get('/sendmessage', async (req, res) => {
 }) 
 
 app.listen(port, () => {
-  console.log(`Example app listening on port ${port}`)
+  console.log(`Queue Publisher is listening on port ${port}`)
 })

@@ -17,12 +17,6 @@ services:
     build:
       context: .
       dockerfile: ./2_QueuePublisher/Dockerfile 
-    restart: on-failure:5
     image: stefanonucida/queue-publisher
-  rabbitmq:
-    container_name: rabbitmq
-    image: rabbitmq:management-alpine
-    ports:
-      - 15672:15672
-      - 5672:5672
+    restart: on-failure:5
 

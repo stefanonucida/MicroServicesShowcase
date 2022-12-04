@@ -6,9 +6,25 @@ services:
   queue-subscriber:
     container_name: queue-subscriber
     build:
-      context: ../../4_QueueSubscriber
-      dockerfile: Dockerfile 
+      context: .
+      dockerfile: ./4_QueueSubscriber/Dockerfile 
+    image: stefanonucida/queue-subscriber
     restart: on-failure:5
-    image: stefanonucida/queue-subscriber 
+  mongodb:
+    container_name: mongodb
+    image: mongo
+    restart: always
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: example
+  mongo-express:
+    image: mongo-express
+    restart: always
+    ports:
+      - 8081:8081
+    environment:
+      ME_CONFIG_MONGODB_ADMINUSERNAME: root
+      ME_CONFIG_MONGODB_ADMINPASSWORD: example
+      ME_CONFIG_MONGODB_URL: mongodb://root:example@mongodb:27017/
   
 

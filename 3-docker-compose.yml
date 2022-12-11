@@ -1,0 +1,15 @@
+version: '3.9'
+
+name: go-grpc-backend
+
+services: 
+  go-grpc-backend:
+    container_name: go-grpc-backend
+    build:
+      context: ./5_GrpcEndpoint/
+      dockerfile: ./Dockerfile 
+    image: stefanonucida/go-grpc-backend
+    restart: on-failure:5
+    ports:
+      - 8089:8080
+

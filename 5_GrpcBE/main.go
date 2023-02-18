@@ -9,6 +9,9 @@ import (
 	"time"
 )
 
+var listeningUrl string = "http://localhost"
+var listeningPort string = ":8080"
+
 func main() {
 	seedData()
 	handleRequests()
@@ -21,7 +24,9 @@ func seedData(){
 func handleRequests(){
 	http.HandleFunc("/", homePage)
 	http.HandleFunc("/getArticles", getArticles)
-	log.Fatal(http.ListenAndServe(":80", nil))
+	fmt.Printf("web server is listening at %s%s\n",listeningUrl, listeningPort)
+	fmt.Printf("get authors at %s%s%s",listeningUrl, listeningPort, "/getArticles\n")
+	log.Fatal(http.ListenAndServe(listeningPort, nil))
 }
 
 func homePage(w http.ResponseWriter, r *http.Request){

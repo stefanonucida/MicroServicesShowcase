@@ -1,0 +1,14 @@
+version: '3.9'
+
+name: go-simple-backend
+
+services: 
+  go-simple-backend:
+    container_name: go-simple-backend
+    build:
+      context: ./5_GrpcBE/
+      dockerfile: ./Dockerfile 
+    image: stefanonucida/go-simple-backend
+    restart: on-failure:5
+    ports:
+      - 8080:8080
